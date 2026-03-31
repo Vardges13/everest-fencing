@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Эверест-Тех — Сигнальные ограждения</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --primary:#1a1a2e;--accent:#e94560;--accent2:#0f3460;
+  --gold:#f5a623;--light:#f8f9fa;--white:#fff;--gray:#6c757d;
+  --shadow:0 8px 32px rgba(0,0,0,0.12);
+}
+body{font-family:'Inter',sans-serif;color:#222;background:#fff;overflow-x:hidden}
+.slide{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:60px 40px;position:relative}
+.slide:nth-child(odd){background:var(--light)}
+.slide:nth-child(even){background:var(--white)}
+.container{max-width:1100px;width:100%}
+
+/* SLIDE 1: Cover */
+.cover{background:linear-gradient(135deg,var(--primary) 0%,var(--accent2) 50%,#16213e 100%);color:var(--white);text-align:center;flex-direction:column}
+.cover .logo{font-size:18px;letter-spacing:8px;text-transform:uppercase;color:var(--gold);margin-bottom:20px;font-weight:300}
+.cover h1{font-size:clamp(32px,5vw,64px);font-weight:900;line-height:1.1;margin-bottom:20px}
+.cover h1 span{color:var(--accent)}
+.cover .subtitle{font-size:clamp(16px,2vw,22px);font-weight:300;color:rgba(255,255,255,0.8);max-width:700px;margin:0 auto 40px}
+.cover .badge{display:inline-block;background:var(--accent);color:#fff;padding:12px 32px;border-radius:50px;font-weight:600;font-size:16px;letter-spacing:1px}
+
+/* Section headers */
+.section-num{font-size:80px;font-weight:900;color:rgba(233,69,96,0.1);line-height:1;margin-bottom:-30px}
+.section-title{font-size:clamp(28px,3.5vw,42px);font-weight:800;color:var(--primary);margin-bottom:12px}
+.section-sub{font-size:18px;color:var(--gray);margin-bottom:40px;font-weight:400}
+
+/* Product cards */
+.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:30px}
+.product-card{background:var(--white);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;transition:transform .3s}
+.product-card:hover{transform:translateY(-5px)}
+.product-header{background:linear-gradient(135deg,var(--primary),var(--accent2));color:#fff;padding:24px 28px}
+.product-header h3{font-size:22px;font-weight:700;margin-bottom:4px}
+.product-header .tag{display:inline-block;background:var(--accent);padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;margin-top:8px}
+.product-body{padding:24px 28px}
+.spec-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee}
+.spec-row:last-child{border:none}
+.spec-label{color:var(--gray);font-size:14px}
+.spec-value{font-weight:600;font-size:14px;text-align:right}
+
+/* Advantages */
+.advantages{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
+.adv-card{background:var(--white);border-radius:12px;padding:28px;box-shadow:0 4px 16px rgba(0,0,0,0.06);border-left:4px solid var(--accent)}
+.adv-card .icon{font-size:36px;margin-bottom:12px}
+.adv-card h4{font-size:16px;font-weight:700;color:var(--primary);margin-bottom:8px}
+.adv-card p{font-size:14px;color:var(--gray);line-height:1.6}
+
+/* Pricing comparison table */
+.price-table{width:100%;border-collapse:separate;border-spacing:0;border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}
+.price-table th{background:var(--primary);color:#fff;padding:16px 20px;font-weight:600;font-size:14px;text-align:left}
+.price-table td{padding:14px 20px;font-size:14px;border-bottom:1px solid #eee}
+.price-table tr:last-child td{border:none}
+.price-table tr:hover td{background:rgba(233,69,96,0.04)}
+.price-table .highlight{background:rgba(233,69,96,0.08);font-weight:700}
+.price-table .our-row{background:linear-gradient(90deg,rgba(233,69,96,0.1),rgba(15,52,96,0.08))}
+.price-table .our-row td{font-weight:700;color:var(--accent)}
+
+/* Applications */
+.apps{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.app-item{display:flex;align-items:flex-start;gap:16px;padding:20px;background:var(--white);border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+.app-item .num{background:var(--accent);color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
+.app-item h4{font-size:15px;font-weight:600;color:var(--primary)}
+.app-item p{font-size:13px;color:var(--gray);margin-top:4px}
+
+/* Production */
+.production-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px}
+.prod-step{text-align:center;padding:24px 16px;background:var(--white);border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.06)}
+.prod-step .step-num{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;font-weight:800;font-size:18px;margin-bottom:12px}
+.prod-step h4{font-size:14px;font-weight:600;color:var(--primary);margin-bottom:6px}
+.prod-step p{font-size:12px;color:var(--gray)}
+
+/* Calculator */
+.calc-container{background:#fff;border-radius:16px;box-shadow:var(--shadow);padding:32px;max-width:900px;margin:0 auto}
+.calc-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-bottom:30px}
+.calc-field{display:flex;flex-direction:column;gap:6px}
+.calc-field label{font-size:12px;font-weight:600;color:var(--primary)}
+.calc-field input,.calc-field select{padding:8px 12px;border:2px solid #e0e0e0;border-radius:8px;font-size:13px;font-family:'Inter',sans-serif;transition:border .2s}
+.calc-field input:focus,.calc-field select:focus{outline:none;border-color:var(--accent)}
+.calc-results{background:linear-gradient(135deg,var(--primary),var(--accent2));color:#fff;border-radius:12px;padding:24px;margin-top:20px}
+.calc-results h3{font-size:16px;font-weight:700;margin-bottom:12px}
+.calc-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.2);font-size:13px}
+.calc-row:last-child{border:none}
+.calc-row .label{opacity:0.9}
+.calc-row .value{font-weight:600}
+
+/* CTA */
+.cta-slide{background:linear-gradient(135deg,var(--primary),var(--accent2));color:#fff;text-align:center;flex-direction:column}
+.cta-slide h2{font-size:clamp(28px,4vw,48px);font-weight:800;margin-bottom:16px}
+.cta-slide p{font-size:18px;color:rgba(255,255,255,0.8);margin-bottom:40px;max-width:600px}
+.cta-contacts{display:flex;gap:40px;flex-wrap:wrap;justify-content:center}
+.cta-contact{text-align:center}
+.cta-contact .label{font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:6px}
+.cta-contact .value{font-size:20px;font-weight:700}
+
+/* Responsive */
+@media(max-width:768px){
+  .slide{padding:40px 20px}
+  .section-num{font-size:50px;margin-bottom:-20px}
+  .products{grid-template-columns:1fr}
+  .price-table{font-size:12px}
+  .price-table th,.price-table td{padding:10px 12px}
+  .cta-contacts{flex-direction:column;gap:20px}
+  .calc-grid{grid-template-columns:1fr}
+}
+
+/* Print */
+@media print{
+  .slide{min-height:auto;page-break-inside:avoid;padding:30px 20px}
+  .cover{min-height:100vh}
+}
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1: Cover -->
+<div class="slide cover">
+  <div class="logo">ООО «Эверест-Тех»</div>
+  <h1>Сигнальные <span>ограждения</span><br>нового поколения</h1>
+  <p class="subtitle">Перфорированные временные ограждения для городских работ: типы «Россети», «КГХ» и другие — собственное производство в Москве</p>
+  <div class="badge">🏭 ПРОИЗВОДИТЕЛЬ • МОСКВА</div>
+</div>
+
+<!-- SLIDE 2: О компании -->
+<div class="slide">
+  <div class="container">
+    <div class="section-num">01</div>
+    <h2 class="section-title">О компании</h2>
+    <p class="section-sub">Металлообрабатывающее производство полного цикла</p>
+    <div class="advantages">
+      <div class="adv-card">
+        <div class="icon">🏭</div>
+        <h4>Собственное производство</h4>
+        <p>Полный цикл: лазерная резка, координатно-пробивные станки, гильотины, листогибы, сварка, порошковая покраска</p>
+      </div>
+      <div class="adv-card">
+        <div class="icon">📊</div>
+        <h4>904 млн ₽ выручка</h4>
+        <p>Один из крупнейших переработчиков металла в московском регионе. 64 сотрудника, стабильный рост</p>
+      </div>
+      <div class="adv-card">
+        <div class="icon">🔧</div>
+        <h4>Широкий парк оборудования</h4>
+        <p>CNC лазерная резка, координатно-пробивные прессы, панелегибы, MIG/MAG/TIG сварка, порошковая покраска</p>
+      </div>
+      <div class="adv-card">
+        <div class="icon">🤝</div>
+        <h4>Надёжные поставщики</h4>
+        <p>Прямые контракты с КУМЗ (листы до 2500 мм), Cladding Solutions (архитектурный алюминий) и другими</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3: Продуктовая линейка -->
+<div class="slide">
+  <div class="container">
+    <div class="section-num">02</div>
+    <h2 class="section-title">Продуктовая линейка</h2>
+    <p class="section-sub">Два ключевых типа перфорированных ограждений для Москвы и регионов</p>
+    <div class="products">
+      <!-- Card 1: Россети -->
+      <div class="product-card">
+        <div class="product-header">
+          <h3>Тип 2 «Россети»</h3>
+          <p style="font-size:14px;opacity:0.8;margin-top:4px">Сигнальное ограждение с перфорацией</p>
+          <span class="tag">ХИТ ПРОДАЖ</span>
+        </div>
+        <div class="product-body">
+          <div class="spec-row"><span class="spec-label">Размер секции</span><span class="spec-value">2000 × 1700 мм</span></div>
+          <div class="spec-row"><span class="spec-label">Заполнение</span><span class="spec-value">Перфорированный лист</span></div>
+          <div class="spec-row"><span class="spec-label">Толщина листа</span><span class="spec-value">0,55 / 0,7 / 1,0 мм</span></div>
+          <div class="spec-row"><span class="spec-label">Материал</span><span class="spec-value">Оцинкованная сталь</span></div>
+          <div class="spec-row"><span class="spec-label">Перфорация</span><span class="spec-value">Лазерная резка</span></div>
+          <div class="spec-row"><span class="spec-label">Покрытие</span><span class="spec-value">Оцинковка / RAL</span></div>
+          <div class="spec-row"><span class="spec-label">Опорный блок</span><span class="spec-value">Бетон 600×150×250 мм</span></div>
+          <div class="spec-row"><span class="spec-label">Отверстие трубы</span><span class="spec-value">Ø 51 мм</span></div>
+          <div class="spec-row"><span class="spec-label">Вес секции</span><span class="spec-value">~35 кг</span></div>
+          <div class="spec-row"><span class="spec-label">Допкомплектация</span><span class="spec-value">Подпорки, освещение</span></div>
+        </div>
+      </div>
+      <!-- Card 2: КГХ -->
+      <div class="product-card">
+        <div class="product-header" style="background:linear-gradient(135deg,#0f3460,#16213e)">
+          <h3>КГХ перфорированное</h3>
+          <p style="font-size:14px;opacity:0.8;margin-top:4px">Ограждения для городского хозяйства</p>
+          <span class="tag" style="background:#f5a623">НОВЫЙ РЕГЛАМЕНТ</span>
+        </div>
+        <div class="product-body">
+          <div class="spec-row"><span class="spec-label">Размер секции</span><span class="spec-value">2400 × 2000 мм</span></div>
+          <div class="spec-row"><span class="spec-label">Альт. размер</span><span class="spec-value">2000 × 2500 мм</span></div>
+          <div class="spec-row"><span class="spec-label">Типы</span><span class="spec-value">1АН / 1БН</span></div>
+          <div class="spec-row"><span class="spec-label">Заполнение</span><span class="spec-value">Перфорированный лист</span></div>
+          <div class="spec-row"><span class="spec-label">Рисунок</span><span class="spec-value">Изобразительная перфорация</span></div>
+          <div class="spec-row"><span class="spec-label">Материал</span><span class="spec-value">Оцинкованная сталь</span></div>
+          <div class="spec-row"><span class="spec-label">Установка</span><span class="spec-value">Стойки в бетонные блоки</span></div>
+          <div class="spec-row"><span class="spec-label">Покрытие</span><span class="spec-value">Оцинковка / RAL</span></div>
+          <div class="spec-row"><span class="spec-label">Видимость</span><span class="spec-value">Высокая визуальная изоляция</span></div>
+          <div class="spec-row"><span class="spec-label">Допкомплектация</span><span class="spec-value">Ножки, подпорки, освещение</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3.5: Калькулятор КГХ -->
+<div class="slide">
+  <div class="container">
+    <div class="section-num">03</div>
+    <h2 class="section-title">Калькулятор КГХ 2000×2400</h2>
+    <p class="section-sub">Рассчитайте стоимость секции ограждения</p>
+    <div class="calc-container">
+      <div class="calc-grid">
+        <div class="calc-field">
+          <label>Количество секций</label>
+          <input type="number" id="qty" value="1" min="1" oninput="calc()">
+        </div>
+        <div class="calc-field">
+          <label>Труба Ø51 (₽/кг)</label>
+          <input type="number" id="p51price" value="90" step="1" oninput="calc()">
+        </div>
+        <div class="calc-field">
+          <label>Труба 30×20 (₽/кг)</label>
+          <input type="number" id="p3020price" value="85" step="1" oninput="calc()">
+        </div>
+        <div class="calc-field">
+          <label>Лист 1250×2300 (₽/кг)</label>
+          <input type="number" id="sheet1price" value="70" step="1" oninput="calc()">
+        </div>
+        <div class="calc-field">
+          <label>Лист 625×2300 (₽/кг)</label>
+          <input type="number" id="sheet2price" value="70" step="1" oninput="calc()">
+        </div>
+        <div class="calc-field">
+          <label>Хомуты (₽/2шт)</label>
+          <input type="number" id="clamps" value="100" step="10" oninput="calc()">
+        </div>
+        <div class="calc-field">
+          <label>Блок (₽/шт)</label>
+          <input type="number" id="block" value="350" step="10" oninput="calc()">
+        </div>
+        <div class="calc-field">
+          <label>Сварка (₽/кг)</label>
+          <input type="number" id="weld" value="50" step="5" oninput="calc()">
+        </div>
+        <div class="calc-field">
+          <label>Покраска (₽)</label>
+          <input type="number" id="paint" value="750" step="10" oninput="calc()">
+        </div>
+        <div class="calc-field">
+          <label>Перфорация (₽)</label>
+          <input type="number" id="perf" value="781" step="10" oninput="calc()">
+        </div>
+        <div class="calc-field">
+          <label>ПЭ (₽)</label>
+          <input type="number" id="pe" value="2484" step="10" oninput="calc()">
+        </div>
+        <div class="calc-field">
+          <label>Символы (₽)</label>
+          <input type="number" id="sym" value="500" step="10" oninput="calc()">
+        </div>
+        <div class="calc-field">
+          <label>Сборка (₽)</label>
+          <input type="number" id="asm" value="0" step="10" oninput="calc()">
+        </div>
+        <div class="calc-field">
+          <label>Упаковка (₽)</label>
+          <input type="number" id="pack" value="50" step="10" oninput="calc()">
+        </div>
+        <div class="calc-field">
+          <label>Доставка (₽)</label>
+          <input type="number" id="del" value="170" step="10" oninput="calc()">
+        </div>
+      </div>
+      
+      <div class="calc-results">
+        <h3>📦 МАТЕРИАЛЫ</h3>
+        <div class="calc-row"><span class="label">Труба Ø51 (4м, 14.24кг):</span><span class="value" id="r51">—</span></div>
+        <div class="calc-row"><span class="label">Труба 30×20 (9.6м, 13.63кг):</span><span class="value" id="r3020">—</span></div>
+        <div class="calc-row"><span class="label">Лист 1250×2300 (2.875м², 22.53кг):</span><span class="value" id="rs1">—</span></div>
+        <div class="calc-row"><span class="label">Лист 625×2300 (1.438м², 11.27кг):</span><span class="value" id="rs2">—</span></div>
+        <div class="calc-row"><span class="label">Хомуты (2шт):</span><span class="value" id="rcl">—</span></div>
+        <div class="calc-row"><span class="label">Метизы М8:</span><span class="value" id="rmet">—</span></div>
+        <div class="calc-row"><span class="label">Блок (1шт):</span><span class="value" id="rblk">—</span></div>
+        <div class="calc-row" style="font-weight:700;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.3)">
+          <span class="label">Итого материалы:</span><span class="value" id="rmat">—</span>
+        </div>
+        
+        <h3 style="margin-top:20px">🔨 РАБОТЫ</h3>
+        <div class="calc-row"><span class="label">Сварка (вес 61.67кг):</span><span class="value" id="rweld">—</span></div>
+        <div class="calc-row"><span class="label">Покраска:</span><span class="value" id="rpaint">—</span></div>
+        <div class="calc-row"><span class="label">Перфорация:</span><span class="value" id="rperf">—</span></div>
+        <div class="calc-row"><span class="label">ПЭ:</span><span class="value" id="rpe">—</span></div>
+        <div class="calc-row"><span class="label">Символы:</span><span class="value" id="rsym">—</span></div>
+        <div class="calc-row"><span class="label">Сборка:</span><span class="value" id="rasm">—</span></div>
+        <div class="calc-row"><span class="label">Упаковка:</span><span class="value" id="rpack">—</span></div>
+        <div class="calc-row"><span class="label">Доставка:</span><span class="value" id="rdel">—</span></div>
+        <div class="calc-row" style="font-weight:700;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,0.3)">
+          <span class="label">Итого работы:</span><span class="value" id="rwork">—</span>
+        </div>
+        
+        <div class="calc-row" style="margin-top:16px;padding-top:12px;border-top:2px solid rgba(255,255,255,0.5);font-size:14px">
+          <span class="label">Себестоимость:</span><span class="value" id="rcost">—</span>
+        </div>
+        <div class="calc-row" style="font-size:13px;opacity:0.8">
+          <span class="label">Наценка 30%:</span><span class="value" id="rmark">—</span>
+        </div>
+        <div class="calc-row" style="font-size:18px;font-weight:900;background:rgba(255,255,255,0.1);padding:12px;border-radius:8px;margin-top:8px">
+          <span class="label">ЦЕНА / 1 ШТ:</span><span class="value" id="rsale">—</span>
+        </div>
+        <div class="calc-row" style="border-top:2px solid rgba(255,255,255,0.3);margin-top:12px;padding-top:12px;font-size:16px">
+          <span class="label">Общая стоимость:</span><span class="value" id="rtotal">—</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4: Область применения -->
+<div class="slide">
+  <div class="container">
+    <div class="section-num">04</div>
+    <h2 class="section-title">Область применения</h2>
+    <p class="section-sub">Везде, где требуется временное ограждение при проведении работ</p>
+    <div class="apps">
+      <div class="app-item">
+        <div class="num">1</div>
+        <div>
+          <h4>Прокладка и ремонт сетей</h4>
+          <p>Электросети «Россети», теплосети, водоснабжение — требования регламентов Москвы</p>
+        </div>
+      </div>
+      <div class="app-item">
+        <div class="num">2</div>
+        <div>
+          <h4>Благоустройство территорий</h4>
+          <p>Городские программы КГХ: ремонт дорог, тротуаров, парков, дворов</p>
+        </div>
+      </div>
+      <div class="app-item">
+        <div class="num">3</div>
+        <div>
+          <h4>Строительные площадки</h4>
+          <p>Ограждение строительных и реконструкционных объектов в городской среде</p>
+        </div>
+      </div>
+      <div class="app-item">
+        <div class="num">4</div>
+        <div>
+          <h4>Дорожные работы</h4>
+          <p>Обозначение опасных зон, временных перекрытий, изменений движения</p>
+        </div>
+      </div>
+      <div class="app-item">
+        <div class="num">5</div>
+        <div>
+          <h4>Массовые мероприятия</h4>
+          <p>Ограждение зон проведения городских мероприятий вблизи проезжей части</p>
+        </div>
+      </div>
+      <div class="app-item">
+        <div class="num">6</div>
+        <div>
+          <h4>Аварийные работы</h4>
+          <p>Экстренное ограждение зон аварий, прорывов, ремонтных работ</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 5: Производственный процесс -->
+<div class="slide">
+  <div class="container">
+    <div class="section-num">05</div>
+    <h2 class="section-title">Производство</h2>
+    <p class="section-sub">Полный цикл изготовления на собственных мощностях</p>
+    <div class="production-grid">
+      <div class="prod-step">
+        <div class="step-num">1</div>
+        <h4>Раскрой</h4>
+        <p>Гильотинная резка оцинкованного листа по размерам секции</p>
+      </div>
+      <div class="prod-step">
+        <div class="step-num">2</div>
+        <h4>Перфорация</h4>
+        <p>CNC лазерная резка рисунка перфорации по чертежу</p>
+      </div>
+      <div class="prod-step">
+        <div class="step-num">3</div>
+        <h4>Гибка</h4>
+        <p>Формовка рёбер жёсткости и загибов на листогибах</p>
+      </div>
+      <div class="prod-step">
+        <div class="step-num">4</div>
+        <h4>Каркас</h4>
+        <p>Изготовление рамы и стоек из профильной трубы</p>
+      </div>
+      <div class="prod-step">
+        <div class="step-num">5</div>
+        <h4>Сварка</h4>
+        <p>Сварка каркаса и крепление перфорированного листа</p>
+      </div>
+      <div class="prod-step">
+        <div class="step-num">6</div>
+        <h4>Покраска</h4>
+        <p>Порошковая покраска RAL или сохранение оцинковки</p>
+      </div>
+      <div class="prod-step">
+        <div class="step-num">7</div>
+        <h4>Контроль</h4>
+        <p>Проверка размеров, качества перфорации и покрытия</p>
+      </div>
+      <div class="prod-step">
+        <div class="step-num">8</div>
+        <h4>Отгрузка</h4>
+        <p>Упаковка и доставка по Москве и МО. Монтаж</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 6: Ценовой анализ рынка -->
+<div class="slide">
+  <div class="container">
+    <div class="section-num">06</div>
+    <h2 class="section-title">Рынок и цены</h2>
+    <p class="section-sub">Сравнительный анализ цен конкурентов (Москва, февраль 2026)</p>
+    
+    <h3 style="font-size:18px;font-weight:700;color:var(--primary);margin-bottom:16px">Тип 2 «Россети» (2000×1700 мм)</h3>
+    <table class="price-table" style="margin-bottom:40px">
+      <tr><th>Компания</th><th>Цена за секцию</th><th>Толщина</th><th>Комплектация</th></tr>
+      <tr><td>PolikSteel</td><td>7 000 ₽</td><td>0,55–1,0 мм</td><td>Секция + стойка</td></tr>
+      <tr><td>ПРОТЭКТ</td><td>от 6 500 ₽</td><td>0,55–0,7 мм</td><td>Секция + стойка</td></tr>
+      <tr><td>Импульс-КС</td><td>от 6 800 ₽</td><td>0,7 мм</td><td>Секция + стойка</td></tr>
+      <tr class="our-row"><td>⭐ Эверест-Тех</td><td>Запрос</td><td>0,55–1,0 мм</td><td>Полная + доп.опции</td></tr>
+    </table>
+
+    <h3 style="font-size:18px;font-weight:700;color:var(--primary);margin-bottom:16px">КГХ перфорированное (2400×2000 мм)</h3>
+    <table class="price-table">
+      <tr><th>Компания</th><th>Цена за секцию</th><th>Тип</th><th>Комплектация</th></tr>
+      <tr><td>Веста Металл</td><td>от 5 300 ₽</td><td>1БН</td><td>Секция</td></tr>
+      <tr><td>Строймашсервис</td><td>6 300 ₽</td><td>КГХ</td><td>Секция оцинкованная</td></tr>
+      <tr><td>Городской вектор</td><td>от 6 000 ₽</td><td>КГХ</td><td>Секция 2400×2000</td></tr>
+      <tr><td>Мастеровит</td><td>от 5 800 ₽</td><td>КГХ на ножках</td><td>Секция + ножки</td></tr>
+      <tr><td>ОК ГБИ</td><td>от 5 500 ₽</td><td>КГХ</td><td>Секция 2000×2500</td></tr>
+      <tr class="our-row"><td>⭐ Эверест-Тех</td><td>Запрос</td><td>Все типы</td><td>Полная + доп.опции</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- SLIDE 7: Преимущества -->
+<div class="slide">
+  <div class="container">
+    <div class="section-num">07</div>
+    <h2 class="section-title">Почему «Эверест-Тех»</h2>
+    <p class="section-sub">Наши конкурентные преимущества</p>
+    <div class="advantages">
+      <div class="adv-card">
+        <div class="icon">⚡</div>
+        <h4>Собственная лазерная резка</h4>
+        <p>Любой рисунок перфорации — стандартный или по вашему дизайну. Быстро, точно, без посредников</p>
+      </div>
+      <div class="adv-card">
+        <div class="icon">💰</div>
+        <h4>Цена производителя</h4>
+        <p>Без наценок дилеров и посредников. Прямые поставки с завода. Скидки на объём</p>
+      </div>
+      <div class="adv-card">
+        <div class="icon">📐</div>
+        <h4>Нестандартные размеры</h4>
+        <p>Изготовим секции любых габаритов под конкретный объект и требования заказчика</p>
+      </div>
+      <div class="adv-card">
+        <div class="icon">🎨</div>
+        <h4>Порошковая покраска</h4>
+        <p>Собственная покрасочная линия. Любой цвет RAL. Долговечное антикоррозийное покрытие</p>
+      </div>
+      <div class="adv-card">
+        <div class="icon">🚛</div>
+        <h4>Доставка и монтаж</h4>
+        <p>Логистика по Москве, МО и всей России. Помощь в установке и комплектации</p>
+      </div>
+      <div class="adv-card">
+        <div class="icon">📋</div>
+        <h4>Документация и сертификаты</h4>
+        <p>Полный пакет документов: паспорта, сертификаты соответствия ГОСТ, протоколы испытаний</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 8: CTA -->
+<div class="slide cta-slide">
+  <h2>Готовы обсудить<br>ваш проект?</h2>
+  <p>Рассчитаем стоимость, подберём оптимальный тип ограждения и организуем поставку в срок</p>
+  <div class="cta-contacts">
+    <div class="cta-contact">
+      <div class="label">Компания</div>
+      <div class="value">ООО «Эверест-Тех»</div>
+    </div>
+    <div class="cta-contact">
+      <div class="label">Город</div>
+      <div class="value">Москва</div>
+    </div>
+    <div class="cta-contact">
+      <div class="label">Контакт</div>
+      <div class="value">Михаил Ковалев</div>
+    </div>
+  </div>
+  <p style="margin-top:40px;font-size:14px;opacity:0.5">© 2026 ООО «Эверест-Тех» • Все права защищены</p>
+</div>
+
+<script>
+// Удельные веса (кг/м.п. и кг/м²)
+const W51 = 3.56;   // Труба Ø51 кг/м.п.
+const W3020 = 1.42; // Труба 30×20 кг/м.п.
+const WSHEET = 7.85; // Лист кг/м²/мм (при толщине 1мм)
+
+function calc() {
+  const qty = parseFloat(document.getElementById('qty').value) || 1;
+  
+  // Цены ₽/кг
+  const p51 = parseFloat(document.getElementById('p51price').value) || 0;
+  const p3020 = parseFloat(document.getElementById('p3020price').value) || 0;
+  const ps1 = parseFloat(document.getElementById('sheet1price').value) || 0;
+  const ps2 = parseFloat(document.getElementById('sheet2price').value) || 0;
+  const clamps = parseFloat(document.getElementById('clamps').value) || 0;
+  const block = parseFloat(document.getElementById('block').value) || 0;
+  const weld = parseFloat(document.getElementById('weld').value) || 0;
+  const paint = parseFloat(document.getElementById('paint').value) || 0;
+  const perf = parseFloat(document.getElementById('perf').value) || 0;
+  const pe = parseFloat(document.getElementById('pe').value) || 0;
+  const sym = parseFloat(document.getElementById('sym').value) || 0;
+  const asm = parseFloat(document.getElementById('asm').value) || 0;
+  const pack = parseFloat(document.getElementById('pack').value) || 0;
+  const del = parseFloat(document.getElementById('del').value) || 0;
+  
+  // Расчёт материалов
+  const w51kg = 4 * W51; // 4м × 3.56 = 14.24кг
+  const w3020kg = 9.6 * W3020; // 9.6м × 1.42 = 13.632кг
+  const ws1kg = 2.875 * WSHEET; // 2.875м² × 7.85 = 22.53кг
+  const ws2kg = 1.4375 * WSHEET; // 1.4375м² × 7.85 = 11.28кг
+  
+  const c51 = w51kg * p51;
+  const c3020 = w3020kg * p3020;
+  const cs1 = ws1kg * ps1;
+  const cs2 = ws2kg * ps2;
+  const ccl = clamps;
+  const cmet = 100; // метизы М8
+  const cblk = block;
+  
+  const totalMat = c51 + c3020 + cs1 + cs2 + ccl + cmet + cblk;
+  
+  // Вес конструкции
+  const totalWeight = w51kg + w3020kg + ws1kg + ws2kg;
+  
+  // Работы
+  const cweld = totalWeight * weld;
+  const cpaint = paint;
+  const cperf = perf;
+  const cpe = pe;
+  const csym = sym;
+  const casm = asm;
+  const cpack = pack;
+  const cdel = del;
+  
+  const totalWork = cweld + cpaint + cperf + cpe + csym + casm + cpack + cdel;
+  
+  // Итого
+  const cost = totalMat + totalWork;
+  const markup = cost * 0.30;
+  const sale = cost + markup;
+  const total = sale * qty;
+  
+  // Отображение
+  document.getElementById('r51').textContent = c51.toFixed(0) + ' ₽';
+  document.getElementById('r3020').textContent = c3020.toFixed(0) + ' ₽';
+  document.getElementById('rs1').textContent = cs1.toFixed(0) + ' ₽';
+  document.getElementById('rs2').textContent = cs2.toFixed(0) + ' ₽';
+  document.getElementById('rcl').textContent = ccl.toFixed(0) + ' ₽';
+  document.getElementById('rmet').textContent = cmet.toFixed(0) + ' ₽';
+  document.getElementById('rblk').textContent = cblk.toFixed(0) + ' ₽';
+  document.getElementById('rmat').textContent = totalMat.toFixed(0) + ' ₽';
+  
+  document.getElementById('rweld').textContent = cweld.toFixed(0) + ' ₽';
+  document.getElementById('rpaint').textContent = cpaint.toFixed(0) + ' ₽';
+  document.getElementById('rperf').textContent = cperf.toFixed(0) + ' ₽';
+  document.getElementById('rpe').textContent = cpe.toFixed(0) + ' ₽';
+  document.getElementById('rsym').textContent = csym.toFixed(0) + ' ₽';
+  document.getElementById('rasm').textContent = casm.toFixed(0) + ' ₽';
+  document.getElementById('rpack').textContent = cpack.toFixed(0) + ' ₽';
+  document.getElementById('rdel').textContent = cdel.toFixed(0) + ' ₽';
+  document.getElementById('rwork').textContent = totalWork.toFixed(0) + ' ₽';
+  
+  document.getElementById('rcost').textContent = cost.toFixed(0) + ' ₽';
+  document.getElementById('rmark').textContent = markup.toFixed(0) + ' ₽';
+  document.getElementById('rsale').textContent = sale.toFixed(0) + ' ₽';
+  document.getElementById('rtotal').textContent = total.toFixed(0) + ' ₽ (' + qty + ' шт)';
+}
+
+window.onload = calc;
+</script>
+
+</body>
+</html>
